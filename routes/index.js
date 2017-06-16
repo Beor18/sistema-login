@@ -64,7 +64,8 @@ router.post("/save",function(req,res){
   var apellido = req.body.person.apellido;
   var telefono = req.body.person.telefono;
   var email = req.body.person.email;
-  con.query("insert into person (nombre,apellido,telefono,email,created_at) value (\""+nombre+"\",\""+apellido+"\",\""+telefono+"\",\""+email+"\",NOW())",function(e,r){
+  var tipo = req.body.person.tipo;
+  con.query("insert into person (nombre,apellido,telefono,email,tipo,created_at) value (\""+nombre+"\",\""+apellido+"\",\""+telefono+"\",\""+email+"\",\""+tipo+"\",NOW())",function(e,r){
   });
   res.redirect("/perfil");
 });
