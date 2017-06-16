@@ -52,6 +52,14 @@
     <input type="text" name="person[email]" class="form-control" value="<%= person.email %>" id="exampleInputEmail1" placeholder="Email">
   </div>
 
+  <div class="form-group">
+    <label for="exampleInputEmail1">Tipo</label>
+    <select autofocus name="person[tipo]" class="form-control" value="<%= person.tipo %>" id="exampleInputEmail1" placeholder="Email">
+       <option value="pelicula">Pelicula</option>
+       <option value="serie">Serie</option>
+    </select>
+  </div>
+
 <input type="hidden" name="person[id]" value="<%= person.id %>">
 
   <button type="submit" class="btn btn-primary">Guardar</button>

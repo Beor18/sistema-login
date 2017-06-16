@@ -87,7 +87,8 @@ router.post("/update",function(req,res){
   var apellido = req.body.person.apellido;
   var telefono = req.body.person.telefono;
   var email = req.body.person.email;
-  con.query(" update person set nombre=\""+nombre+"\",apellido=\""+apellido+"\",telefono=\""+telefono+"\",email=\""+email+"\" where id="+id,function(e,r){
+  var tipo = req.body.person.tipo;
+  con.query(" update person set nombre=\""+nombre+"\",apellido=\""+apellido+"\",telefono=\""+telefono+"\",email=\""+email+"\",tipo=\""+tipo+"\" where id="+id,function(e,r){
   });
   res.redirect("/edit/"+id);
 });
