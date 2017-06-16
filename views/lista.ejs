@@ -14,11 +14,23 @@
   <title>CRUD Node</title>
 </head>
 <body>
+
+<nav class="navbar navbar-default">
+        <div class="container">
+           <ul class="nav nav-pills">
+              <li role="presentation"><a href="/perfil">Inicio</a></li>
+              <li role="presentation"><a href="/alta">Subir</a></li>
+              <li role="presentation" class="active"><a href="/lista">Listado</a></li>
+              <li role="presentation"><a href="#">Contacto</a></li>
+          </ul>
+        </div>
+      </nav>
+
 <div class="container">
 <div class="row">
 <div class="col-md-12">
 <h2>Contactos</h2>
-<a href="/alta" class="btn btn-default">Nuevo</a>
+
 <br><br>
 <% if(persons.length>0){%>
 <table class="table table-bordered" border="1">

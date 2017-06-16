@@ -14,11 +14,21 @@
 </head>
 <body>
  
+ <nav class="navbar navbar-default">
+        <div class="container">
+           <ul class="nav nav-pills">
+              <li role="presentation"><a href="/perfil">Inicio</a></li>
+              <li role="presentation" class="active"><a href="/alta">Subir</a></li>
+              <li role="presentation"><a href="/lista">Listado</a></li>
+              <li role="presentation"><a href="#">Contacto</a></li>
+          </ul>
+        </div>
+      </nav>
+
 <div class="container">
 <div class="row">
 <div class="col-md-12">
 <h2>Nuevo Contacto</h2>
-<a href="/" class="btn btn-default">Inicio</a>
 <br><br>
 <form method="post" action="/save">
   <div class="form-group">
