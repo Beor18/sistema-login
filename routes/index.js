@@ -97,7 +97,7 @@ router.post("/update",function(req,res){
 router.get("/delete/:personid",function(req,res){
   con.query("delete from person where id="+req.params.personid,function(e,r){
   });
-  res.redirect("/");
+  res.redirect("/lista");
 });
 
 module.exports = router;
