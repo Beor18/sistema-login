@@ -78,7 +78,7 @@ router.post("/save",function(req,res){
       var tipo = req.body.tipo;
  
    if (!req.files)
- return res.status(400).send('No files were uploaded.');
+ return res.status(400).send('Error.');
  
  var file = req.files.avatar;
  var img_name="http://192.168.0.102:3000/public/carga/"+file.name;
@@ -95,7 +95,7 @@ router.post("/save",function(req,res){
       res.redirect("/perfil");
     });
           } else {
-            message = "This format is not allowed , please upload file with '.png','.gif','.jpg'";
+            message = "El formato no es valido, por favor suba lo siguiente '.png','.gif','.jpg'";
             res.render('index.ejs',{message: message});
           }
    } else {
