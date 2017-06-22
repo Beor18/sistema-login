@@ -1,52 +1,14 @@
 var express = require('express');
 var passport = require('passport');
 var router = express.Router();
-
-var fs = require("fs");
-
-var multer = require("multer");
-var upload = multer({dest: "./uploads"});
-
-var mongoose = require("mongoose");
-
-mongoose.connect("mongodb://localhost/images");
-var conn = mongoose.connection;
-
-var gfs;
+var mysql = require('mysql');
+var path = require('path');
+var fileUpload = require('express-fileupload');
 
 
-var Grid = require("gridfs-stream");
-Grid.mongo = mongoose.mongo;
+router.use(fileUpload());
 
-conn.once("open", function(){
-  gfs = Grid(conn.db);
-  router.get("/sultan", function(req,res){
-    //renders a multipart/form-data form
-    res.render("sultan");
-  });
 
-  //segundo parametro es multer.
-  router.post("/sultan", upload.single("avatar"), function(req, res, next){
-    var writestream = gfs.createWriteStream({
-      filename: req.file.originalname
-    });
-    //
-    fs.createReadStream("./uploads/" + req.file.filename)
-      .on("end", function(){fs.unlink("./uploads/"+ req.file.filename, function(err){res.send("success")})})
-        .on("err", function(){res.send("Error al subir imagen")})
-          .pipe(writestream);
-  });
-
-  // envio imagen por filename.
-  router.get("/:filename", function(req, res){
-      var readstream = gfs.createReadStream({filename: req.params.filename});
-      readstream.on("error", function(err){
-        res.send("No image found with that title");
-      });
-      readstream.pipe(res);
-  });
-
-});
 
 router.get('/', (req, res, next) => {
 	res.render('index', {title: 'Express'});
@@ -105,15 +67,40 @@ router.post('/login', passport.authenticate('local-login', {
 
 
 router.post("/save",function(req,res){
-  console.log(req.body.person.nombre)
-  var nombre = req.body.person.nombre;
-  var apellido = req.body.person.apellido;
-  var telefono = req.body.person.telefono;
-  var email = req.body.person.email;
-  var tipo = req.body.person.tipo;
-  con.query("insert into person (nombre,apellido,telefono,email,tipo,created_at) value (\""+nombre+"\",\""+apellido+"\",\""+telefono+"\",\""+email+"\",\""+tipo+"\",NOW())",function(e,r){
-  });
-  res.redirect("/perfil");
+
+//Subida de imagen a base de datos y carpeta
+   if(req.method == "POST"){
+      var post  = req.body;
+      var nombre = req.body.nombre;
+      var apellido = req.body.apellido;
+      var telefono = req.body.telefono;
+      var email = req.body.email;
+      var tipo = req.body.tipo;
+ 
+   if (!req.files)
+ return res.status(400).send('No files were uploaded.');
+ 
+ var file = req.files.avatar;
+ var img_name="http://192.168.0.102:3000/public/carga/"+file.name;
+ 
+    if(file.mimetype == "image/jpeg" ||file.mimetype == "image/png"||file.mimetype == "image/gif" ){
+                                 
+              file.mv('./public/carga/'+file.name, function(err) {
+                             
+               if (err)
+ 
+                 return res.status(500).send(err);
+      con.query("insert into person (nombre,apellido,telefono,email,tipo,imagen,created_at) value (\""+nombre+"\",\""+apellido+"\",\""+telefono+"\",\""+email+"\",\""+tipo+"\",\""+img_name+"\",NOW())",function(e,r){
+      });
+      res.redirect("/perfil");
+    });
+          } else {
+            message = "This format is not allowed , please upload file with '.png','.gif','.jpg'";
+            res.render('index.ejs',{message: message});
+          }
+   } else {
+      res.render('index.ejs');
+   }
 });
 
 
@@ -134,6 +121,8 @@ router.post("/update",function(req,res){
   var telefono = req.body.person.telefono;
   var email = req.body.person.email;
   var tipo = req.body.person.tipo;
+
+
   con.query(" update person set nombre=\""+nombre+"\",apellido=\""+apellido+"\",telefono=\""+telefono+"\",email=\""+email+"\",tipo=\""+tipo+"\" where id="+id,function(e,r){
   });
   res.redirect("/edit/"+id);
@@ -144,6 +133,19 @@ router.get("/delete/:personid",function(req,res){
   con.query("delete from person where id="+req.params.personid,function(e,r){
   });
   res.redirect("/lista");
+});
+
+
+  
+router.get('/pelicula/:id',function(req,res) {
+
+    //var id = req.params.id;
+    //var sql="SELECT * FROM `person` WHERE `id`='"+id+"'"; 
+    //con.query(sql, function(err, result){
+   
+      //res.render('pelicula.ejs',{data:result});
+   //});
+
 });
 
 module.exports = router;
