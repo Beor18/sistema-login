@@ -139,12 +139,13 @@ router.get("/delete/:personid",function(req,res){
   
 router.get('/pelicula/:id',function(req,res) {
 
-    // falta terminar y probar
+//A la mierda esta parte
+    var message = '';
     var id = req.params.id;
-    var sql="SELECT * FROM `person` WHERE `id`='"+id+"'"; 
-    con.query(sql, function(err, result){
+    var sql="select * from person where id='"+id+"'"; 
+    con.query(sql, function(e,r){
    
-      res.render('pelicula.ejs',{data:result});
+      res.render('pelicula.ejs',{data:r});
    });
 
 });
