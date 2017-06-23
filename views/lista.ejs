@@ -40,6 +40,7 @@
 	<th>Telefono</th>
   <th>Email</th>
   <th>tipo</th>
+  <th>imagen</th>
 	<th></th>
 </thead>
   <% for(var i=0; i<persons.length; i++) {%>
@@ -49,6 +50,7 @@
       <td><%= persons[i].telefono %></td>
       <td><%= persons[i].email %></td>
       <td><%= persons[i].tipo %></td>
+      <td><img style="width:150px;height: 150px;" src="<%= persons[i].imagen %>"></td>
       <td>
       	<a href="/edit/<%= persons[i].id %>" class="btn-xs btn btn-warning">Editar</a>
       	<a href="/delete/<%= persons[i].id %>" class="btn-xs btn btn-danger">Eliminar</a>
