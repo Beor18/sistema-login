@@ -139,14 +139,13 @@ router.get("/delete/:personid",function(req,res){
   
 router.get('/pelicula/:id',function(req,res) {
 
-//A la mierda esta parte
-    var message = '';
-    var id = req.params.id;
-    var sql="select * from person where id='"+id+"'"; 
-    con.query(sql, function(e,r){
-   
-      res.render('pelicula.ejs',{data:r});
-   });
+    // falta terminar y probar
+    var imagenes = req.params.imagen;
+    //var sql="select * from person where imagen=\""+img_name+"\"";
+    var img_name="http://192.168.0.102:3000/carga/dni.jpg";
+    con.query("select * from person where imagen=\""+img_name+"\"",function(e,r){
+    res.render("pelicula.ejs",{persons:img_name});
+});
 
 });
 
