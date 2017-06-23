@@ -81,7 +81,7 @@ router.post("/save",function(req,res){
  return res.status(400).send('Error.');
  
  var file = req.files.avatar;
- var img_name="http://192.168.0.102:3000/carga/"+file.name;
+ var img_name="http://192.168.0.101:3000/carga/"+file.name;
  
     if(file.mimetype == "image/jpeg" ||file.mimetype == "image/png"||file.mimetype == "image/gif" ){
                                  
@@ -139,19 +139,7 @@ router.get("/delete/:personid",function(req,res){
   
 router.get('/pelicula/:id',function(req,res) {
 
-    // falta terminar y probar
-    //var imagenes = req.params.imagen;
-    
-    //var sql="select * from person where nombre";
-    con.query("SELECT * FROM person WHERE nombre", function (err, result) {
-      if (err) throw err;
-      console.log(result);
-    });
-
-    //var img_name="http://192.168.0.102:3000/carga/dni.jpg";
-    //con.query("select * from person where imagen=\""+img_name+"\"",function(e,r){
-    //res.render("pelicula.ejs",{persons:img_name});
-//});
+    //Lo dejo por las dudas
 
 });
 
