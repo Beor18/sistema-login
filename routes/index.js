@@ -11,7 +11,10 @@ router.use(fileUpload());
 
 
 router.get('/', (req, res, next) => {
-	res.render('index', {title: 'Express'});
+	//res.render('index', {title: 'Express'});
+  con.query("select * from person",function(e,r){
+    res.render("index.ejs",{persons:r});
+});
 });
 
 router.get('/login', (req, res, next) => {
