@@ -140,8 +140,8 @@ router.get("/delete/:personid",function(req,res){
 router.get('/pelicula/:id',function(req,res) {
 
     // falta terminar y probar
-    var imagenes = req.params.imagen;
-    //var sql="select * from person where imagen=\""+img_name+"\"";
+    //var imagenes = req.params.imagen;
+    
     var img_name="http://192.168.0.102:3000/carga/dni.jpg";
     con.query("select * from person where imagen=\""+img_name+"\"",function(e,r){
     res.render("pelicula.ejs",{persons:img_name});
