@@ -139,11 +139,11 @@ router.get("/delete/:personid",function(req,res){
 });
 
 
-  
-router.get('/pelicula/:id',function(req,res) {
 
-    //Lo dejo por las dudas
-
+router.get("/pelicula/:personid",function(req,res){
+con.query("select * from person where id="+req.params.personid,function(e,r){
+  res.render("test.ejs",{person:r[0]});
+});
 });
 
 module.exports = router;
