@@ -46,7 +46,7 @@
 
 .snip1543 img {
   backface-visibility: hidden;
-  max-width: 514px;
+  width: 514px;
   height: 225px;
   vertical-align: top;
 }
@@ -117,9 +117,9 @@
   letter-spacing: 1px;
 }
 
-.snip1543 h3 {
+.snip1543 h3,h4,h5,h6 {
   font-family: 'Teko', sans-serif;
-  font-size: 36px;
+  font-size: 25px;
   font-weight: 700;
   line-height: 1em;
   text-transform: uppercase;
@@ -138,7 +138,7 @@
   z-index: 1;
 }
 
-.snip1543:hover h3,
+.snip1543:hover h3,h4,h5,h6
 .snip1543.hover h3,
 .snip1543:hover p,
 .snip1543.hover p {
@@ -186,9 +186,10 @@
 <nav class="navbar navbar-default">
         <div class="container">
            <ul class="nav nav-pills">
-              <li role="presentation"><a href="/perfil">Inicio</a></li>
+              <li role="presentation"><a href="/">Inicio</a></li>
+              <li role="presentation"><a href="/perfil">Perfil</a></li>
               <li role="presentation"><a href="/alta">Subir</a></li>
-              <li role="presentation" class="active"><a href="/lista">Listado</a></li>
+              <li role="presentation" class="active"><a href="/lista">Listado Peliculas / Series</a></li>
               <li role="presentation"><a href="#">Contacto</a></li>
           </ul>
         </div>
@@ -197,23 +198,29 @@
 <div class="container">
 <div class="row">
 <div class="col-md-12">
-<h2>Peliculas // Series</h2>
+<div class="page-header">
+  <h1>Peliculas // Series<small> un texto</small></h1>
+</div>
 
 <br><br>
 <% if(persons.length>0){%>
 
 <% for(var i=0; i<persons.length; i++) {%>
+<div class="col-md-4">
 <figure class="snip1543">
   <img src="<%= persons[i].imagen %>" />
   <figcaption>
     <h3><%= persons[i].nombre %></h3>
     <p></p>
     <p><strong><%= persons[i].tipo %></strong></p>
-    <p></p>
-    <p>The only skills I have the patience to learn are those that have no real application in life.</p>
+    <br>
+    <p><%= persons[i].apellido %></p>
   </figcaption>
   <a href="#"></a>
 </figure>
+<a href="/edit/<%= persons[i].id %>" class="btn-xs btn btn-warning">Editar</a>
+<a href="/delete/<%= persons[i].id %>" class="btn-xs btn btn-danger">Eliminar</a>
+</div>
 <% } %>
 
 
