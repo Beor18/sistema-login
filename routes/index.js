@@ -79,12 +79,13 @@ router.post("/save",function(req,res){
       var telefono = req.body.telefono;
       var email = req.body.email;
       var tipo = req.body.tipo;
+      var link = req.body.link;
  
    if (!req.files)
  return res.status(400).send('Error.');
  
  var file = req.files.avatar;
- var img_name="http://192.168.0.101:3000/carga/"+file.name;
+ var img_name="http://192.168.0.103:3000/carga/"+file.name;
  
     if(file.mimetype == "image/jpeg" ||file.mimetype == "image/png"||file.mimetype == "image/gif" ){
                                  
@@ -93,7 +94,7 @@ router.post("/save",function(req,res){
                if (err)
  
                  return res.status(500).send(err);
-      con.query("insert into person (nombre,apellido,telefono,email,tipo,imagen,created_at) value (\""+nombre+"\",\""+apellido+"\",\""+telefono+"\",\""+email+"\",\""+tipo+"\",\""+img_name+"\",NOW())",function(e,r){
+      con.query("insert into person (nombre,apellido,telefono,email,tipo,imagen,link,created_at) value (\""+nombre+"\",\""+apellido+"\",\""+telefono+"\",\""+email+"\",\""+tipo+"\",\""+img_name+"\",\""+link+"\",NOW())",function(e,r){
       });
       res.redirect("/perfil");
     });
