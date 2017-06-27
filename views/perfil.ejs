@@ -2,6 +2,17 @@
 <html>
 <head>
   <title>Sistema Prueba</title>
+  <!-- Importo el módulo socket.io que tengo en el proyecto -->
+    <script src="/javascripts/socket.io.js"></script>
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <!-- Importo el archivo Javascript de Highcharts directamente desde su servidor -->
+    <!--<script src="http://code.highcharts.com/highcharts.js" type="application/javascript"></script>-->
+    <script src="http://code.highcharts.com/stock/highstock.js"></script>
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
+    <script src="http://code.highcharts.com/modules/exporting.js"></script>
+
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
@@ -26,23 +37,25 @@
 </div>
 
 
+
 <div class="container col-md-12">
-    <div class="page-header">
-      <h3>Example page header <small>Subtext for header</small></h3>
-    </div>
-        <div class="row">
-      <div class="col-md-4">
-        <div class="panel panel-primary">
-          <div class="panel-heading">
-            <h3 class="panel-title">Cantidad de Peliculas // Series</h3>
-            
-          </div>
-          <div class="panel-body">
-            <h1 style="text-align:center;">25</h1>
-          </div>
           
+  <div class="row marketing">
+      <div class="col-lg-4">
+        <div class="panel panel-primary">
+          <div class="panel-heading">Información General</div>
+          <div class="panel-body"><p  id="p_hostname">Estado del Server. Consumos.</p>
+            <p  id="p_kernel"></p>
+            <p  id="p_uptime"></p>
+            <div>
+                <b>Lista de Procesos:</b>
+                <ol id="toplist">
+                </ol>
+            </div>
+          </div>
         </div>
       </div>
+
       <div class="col-md-8">
         <div class="panel panel-success">
           <div class="panel-heading">
@@ -51,12 +64,190 @@
           </div>
           <div class="panel-body">
           
+          <div class="container" id="chart" style="width:100%; height:300px;"></div>
           </div>
           
         </div>
       </div>
       
-    </div>
+  </div>
+
+  <div class="row marketing">
+      <div class="col-lg-6">
+      <div id="chartMemory" style="min-width: 100; height:250px; margin: 0 auto"></div>
+        <div class="container" id="chart" style="width:100%; height:300px;"></div>
+      </div>
+      <div class="col-lg-6">
+        <div class="container" id="cpu_usage" style="width:100%; height:300px;"></div>
+      </div>
+  </div>
 </div>
+
+ <!-- Comienza el Javascript -->
+    <script>
+    // Creo un WebSocket. Pone la IP del servidor y puerto 4000. 
+    var socket = io.connect('http://192.168.0.102:4000');
+    //console.log(location.host)
+    // Creo un nuevo objeto 'Chart'
+    var chart, chartCPU, chartMem, memTotal;
+    chart = new Highcharts.StockChart({
+        chart: {
+            renderTo: 'chart', 
+            defaultSeriesType: 'spline',
+            events: {
+                load: function() {
+                    // Cada vez que reciba un valor desde el socket, lo meto en la gráfica
+                    socket.on('temperatureUpdate', function (time, data) {
+                        var series = chart.series[0];
+                        series.addPoint([time, data]);
+                    });
+                }
+            }
+        },
+        rangeSelector : {
+            selected : 100
+        },
+        title: {
+            text: 'Temperatura CPU'
+        },
+        xAxis: {
+            type: 'datetime',
+            tickPixelInterval: 150,
+            maxZoom: 20 * 1000
+        },
+        yAxis: {
+            minPadding: 0.2,
+            maxPadding: 0.2,
+            title: {
+                text: 'Temperatura ºC',
+                margin: 10
+            }
+        },
+        series: [{
+            name: 'Temperatura',
+            data: []
+        }],
+        credits: {
+                enabled: false
+        }
+    });
+
+      chartCPU = new Highcharts.StockChart({
+        chart: {
+            renderTo: 'cpu_usage', 
+            defaultSeriesType: 'spline',
+            events: {
+                load: function() {
+                    // Cada vez que reciba un valor desde el socket, lo meto en la gráfica
+                    socket.on('cpuUsageUpdate', function (time, data) {
+                        var series = chartCPU.series[0];
+                        series.addPoint([time, data]);
+                    });
+                }
+            }
+        },
+        rangeSelector : {
+            selected : 100
+        },
+        title: {
+            text: 'Carga CPU'
+        },
+        xAxis: {
+            type: 'datetime',
+            tickPixelInterval: 150,
+            maxZoom: 20 * 1000
+        },
+        yAxis: {
+            minPadding: 0.2,
+            maxPadding: 0.2,
+            title: {
+                text: 'Carga CPU (%)',
+                margin: 10
+            }
+        },
+        series: [{
+            name: 'CPU Load',
+            data: []
+        }],
+        credits: {
+                enabled: false
+        }
+    });
+
+    chartMem = new Highcharts.Chart({
+            chart: {
+                renderTo: 'chartMemory',
+                type: 'bar',
+                events: {
+                load: function() {
+                    // Cada vez que reciba un valor desde el socket, lo meto en la gráfica
+                    socket.on('memoryUpdate', function (free, used, buffered, cached) {
+                        chartMem.series[0].setData([{y: used, color: 'red'}, {y: free, color: 'green'}, {y: buffered, color: 'blue'}, {y: cached, color: 'orange'}]);
+                      });
+                    }
+                  }
+            },
+            title: {
+                text: 'Memoria RAM'
+            },
+            xAxis: {
+                categories: ['Usado', 'Libre', 'Buffered', 'Cache'],
+                title: {
+                    text: null
+                }
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: "Porcentaje",
+                    align: 'high'
+                },
+                labels: {
+                    overflow: 'justify'
+                }
+            },
+            tooltip: {
+                valueSuffix: ' %'
+            },
+            plotOptions: {
+                bar: {
+                    dataLabels: {
+                        enabled: true
+                    }
+                }
+            },            
+            credits: {
+                enabled: false
+            },
+            series: [{
+                name: "Memoria",
+                data: [{y: 0, color: 'red'}, {y: 0, color: 'green'}, {y: 0, color: 'blue'}, {y: 0, color: 'orange'}]
+            }]
+        });
+        socket.on('hostname', function (hname) {
+          document.getElementById("p_hostname").innerHTML="<b>Nombre Host:</b> "+hname;
+        });
+        socket.on('kernel', function (ker) {
+          document.getElementById("p_kernel").innerHTML="<b>Kernel:</b> "+ker;
+        }); 
+        socket.on('uptime', function (uptime) {
+          document.getElementById("p_uptime").innerHTML="<b>Activo:</b> "+ uptime;
+        }); 
+        socket.on('toplist', function (toplist) {
+            var res = toplist.split("\n");
+            var result = "";
+            for (r in res) {
+              if (res[r] != "") {
+                  result = result + "<li>" + res[r] + "</li>"
+            }
+            }
+            document.getElementById("toplist").innerHTML=result;
+        });
+        socket.on('memoryTotal', function (mem) {
+          chartMem.setTitle({text:"Memoria Total: "+mem+" KB"});
+          memTotal = mem;
+        });
+    </script>
+
 </body>
 </html>
