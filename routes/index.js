@@ -28,6 +28,8 @@ router.get('/registro', (req, res) => {
 // Solo para el usuario
 
 router.get('/perfil', isLoggedIn, (req, res) => {
+
+  
 	res.render('perfil.ejs', {user: req.user});
 });
 
