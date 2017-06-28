@@ -13,7 +13,10 @@ router.use(fileUpload());
 router.get('/', (req, res, next) => {
 	//res.render('index', {title: 'Express'});
   con.query("select * from person",function(e,r){
-    res.render("index.ejs",{persons:r});
+    res.render("index.ejs",{
+      persons:r,
+      user: req.user
+      });
 });
 });
 
@@ -145,7 +148,10 @@ router.get("/delete/:personid",function(req,res){
 
 router.get("/pelicula/:personid",function(req,res){
 con.query("select * from person where id="+req.params.personid,function(e,r){
-  res.render("test.ejs",{person:r[0]});
+  res.render("test.ejs",{
+    person:r[0],
+    user: req.user
+  });
 });
 });
 
