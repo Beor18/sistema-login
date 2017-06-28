@@ -39,12 +39,16 @@
 
 
 <div class="container col-md-12">
-          
+  
+  <div class="page-header">
+  <h2>Estadisticas del Servidor <small> // Carga CPU, Consumo de RAM y Procesos activos.</small></h2>
+</div>
+
   <div class="row marketing">
       <div class="col-lg-4">
         <div class="panel panel-primary">
-          <div class="panel-heading">Información General</div>
-          <div class="panel-body"><p  id="p_hostname">Estado del Server. Consumos.</p>
+          <div class="panel-heading"><strong>Información General</strong></div>
+          <div class="panel-body" style="background: #7CB5EC; color: #fff; font-weight: 600;font-size: 15px;"><p  id="p_hostname">Estado del Server. Consumos.</p>
             <p  id="p_kernel"></p>
             <p  id="p_uptime"></p>
             <div>
@@ -59,10 +63,10 @@
       <div class="col-md-8">
         <div class="panel panel-success">
           <div class="panel-heading">
-            <h3 class="panel-title">Tasks</h3>
+            <h3 class="panel-title" style="text-align: center;">Temperatura CPU</h3>
             
           </div>
-          <div class="panel-body">
+          <div class="panel-body" style="background: #EEE; padding-top: 35px; padding-bottom: 35px;">
           
           <div class="container" id="chart" style="width:100%; height:300px;"></div>
           </div>
@@ -73,13 +77,36 @@
   </div>
 
   <div class="row marketing">
-      <div class="col-lg-6">
-      <div id="chartMemory" style="min-width: 100; height:250px; margin: 0 auto"></div>
-        <div class="container" id="chart" style="width:100%; height:300px;"></div>
+
+      <div class="col-md-6">
+        <div class="panel panel-success">
+          <div class="panel-heading">
+            <h3 class="panel-title">Memoria Total</h3>
+            
+          </div>
+          <div class="panel-body">
+          <div id="chartMemory" style="min-width: 100; height:250px; margin: 0 auto"></div>
+        <!--<div class="container" id="chart" style="width:100%; height:300px;"></div>-->
+          
+          </div>
+          
+        </div>
       </div>
-      <div class="col-lg-6">
-        <div class="container" id="cpu_usage" style="width:100%; height:300px;"></div>
+
+      <div class="col-md-6">
+        <div class="panel panel-success">
+          <div class="panel-heading">
+            <h3 class="panel-title">Carga CPU</h3>
+            
+          </div>
+          <div class="panel-body">
+          <div class="container" id="cpu_usage" style="width:100%; height:300px;"></div>
+          
+          </div>
+          
+        </div>
       </div>
+
   </div>
 </div>
 
@@ -108,7 +135,7 @@
             selected : 100
         },
         title: {
-            text: 'Temperatura CPU'
+            //text: 'Temperatura CPU'
         },
         xAxis: {
             type: 'datetime',
@@ -150,7 +177,7 @@
             selected : 100
         },
         title: {
-            text: 'Carga CPU'
+            //text: 'Carga CPU'
         },
         xAxis: {
             type: 'datetime',
