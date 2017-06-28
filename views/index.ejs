@@ -6,7 +6,9 @@
 				  		<li role="presentation" class="active"><a href="#">Inicio</a></li>
 				  		<li role="presentation"><a href="#">Algo</a></li>
 				  		<li role="presentation"><a href="#">Contacto</a></li>
-				  		<li class="active navbar-right" role="presentation"><a href="/perfil"><strong>Acceso Clientes</strong></a></li></li>
+				  		<% if (user) { %>
+				  		<li class="active navbar-right" role="presentation"><a href="/perfil"><strong>Acceso Administrador</strong></a></li></li>
+				  		<% } %>
 					</ul>
 			  </div>
 			</nav>
