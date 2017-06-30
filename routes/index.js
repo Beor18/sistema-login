@@ -31,9 +31,13 @@ router.get('/registro', (req, res) => {
 // Solo para el usuario
 
 router.get('/perfil', isLoggedIn, (req, res) => {
+  con.query("select * from person ORDER BY id DESC LIMIT 2", function(e,r){
+    res.render('perfil.ejs', {
+      person:r,
+      user: req.user
+    });
+  });
 
-  
-	res.render('perfil.ejs', {user: req.user});
 });
 
 router.get('/home', isLoggedIn, (req, res) => {
