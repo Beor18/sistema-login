@@ -40,6 +40,15 @@
 
 <div class="container col-md-12">
   
+  <% if(person.length>0){%>
+    <% for(var i=0; i<person.length; i++) {%>
+  <ul>
+    <li><%= person[i].id %></li>
+  </ul>
+    <% } %>
+  <%} else {%>
+<p class="alert alert-warning">No hay nadda</p>
+<% } %>
   <div class="page-header">
   <h2>Estadisticas del Servidor <small> // Carga CPU, Consumo de RAM y Procesos activos.</small></h2>
 </div>
