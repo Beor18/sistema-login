@@ -12,12 +12,17 @@ router.use(fileUpload());
 
 router.get('/', (req, res, next) => {
 	//res.render('index', {title: 'Express'});
-  con.query("select * from person",function(e,r){
+
+  var consuno = "select * from person order by destacadas desc limit 5";
+  var consdos = "select * from person";
+  con.query(consuno,function(e,r){
     res.render("index.ejs",{
       persons:r,
       user: req.user
       });
 });
+
+
 });
 
 router.get('/login', (req, res, next) => {
