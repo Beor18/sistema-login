@@ -58,6 +58,42 @@
 			</div>
 			</div>
 			</div>
+
+
+			<div class="container">
+			<div class="row" style="box-sizing: border-box;margin-bottom: 30px;">
+			<div class="col-md-12" style="background:#EEE;">
+			<div class="page-header">
+      		<h3>Peliculas // Series <small> Subtext for header</small></h3>
+    		</div>
+
+			<% if(persons.length.destacadas>0){%>
+
+			<% for(var i=0; i<persons.length.destacadas; i++) {%>
+			<div class="col-md-4">
+			<figure class="snip1543">
+			  <img src="<%= persons[i].imagen %>" />
+			  <figcaption>
+			    <h3><%= persons[i].nombre %></h3>
+			    <p></p>
+			    <p><strong><%= persons[i].tipo %></strong></p>
+			    <br>
+			    <p><%= persons[i].apellido %></p>
+			  </figcaption>
+			  <a href="/pelicula/<%= persons[i].id %>"></a>
+			</figure>
+			</div>
+			<% } %>
+
+			<%} else {%>
+			<p class="alert alert-warning">No hay contactos</p>
+			<% } %>
+			</div>
+			</div>
+			</div>
+
+
+
 			
 			<footer class="container-fluid" style="background-color: #D3D3D3; padding: 20px;">
 
