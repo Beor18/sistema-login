@@ -100,7 +100,7 @@ router.post("/save",function(req,res){
  return res.status(400).send('Error.');
  
  var file = req.files.avatar;
- var img_name="http://192.168.0.103:3000/carga/"+file.name;
+ var img_name="http://loganserver.hopto.org:3000/carga/"+file.name;
  
     if(file.mimetype == "image/jpeg" ||file.mimetype == "image/png"||file.mimetype == "image/gif" ){
                                  
