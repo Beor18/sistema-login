@@ -23,6 +23,7 @@
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
     "serve-favicon": "^2.4.3",
-    "socket.io": "~0.9.14"
+    "socket.io": "~0.9.14",
+    "mysql": "^2.13.0"
   }
 }
