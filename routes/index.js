@@ -36,7 +36,7 @@ router.get('/registro', (req, res) => {
 // Solo para el usuario
 
 router.get('/perfil', isLoggedIn, (req, res) => {
-  con.query("select * from person ORDER BY id DESC LIMIT 2", function(e,r){
+  con.query("select * from person WHERE destacadas IS NOT null ORDER BY destacadas DESC LIMIT 2", function(e,r){
     res.render('perfil.ejs', {
       person:r,
       user: req.user
