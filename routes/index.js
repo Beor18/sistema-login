@@ -14,7 +14,7 @@ router.get('/', (req, res, next) => {
 	//res.render('index', {title: 'Express'});
 
   var consuno = "select * from person WHERE destacadas IS NOT null ORDER BY destacadas DESC LIMIT 5";
-  var consdos = "select * from person";
+  var consdos = "select * from person ORDER BY created_at DESC LIMIT 6";
   con.query(consuno,function(e,r){
 	con.query(consdos, function(e,p) {
     		res.render("index.ejs",{
