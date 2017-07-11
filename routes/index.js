@@ -16,10 +16,14 @@ router.get('/', (req, res, next) => {
   var consuno = "select * from person WHERE destacadas IS NOT null ORDER BY destacadas DESC LIMIT 5";
   var consdos = "select * from person";
   con.query(consuno,function(e,r){
-    res.render("index.ejs",{
-      persons:r,
-      user: req.user
-      });
+	con.query(consdos, function(e,p) {
+    		res.render("index.ejs",{
+      		persons:r,
+		personas:p,
+      		user: req.user
+      	});
+   });
+
 });
 
 
