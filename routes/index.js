@@ -13,7 +13,7 @@ router.use(fileUpload());
 router.get('/', (req, res, next) => {
 	//res.render('index', {title: 'Express'});
 
-  var consuno = "select * from person order by destacadas desc limit 5";
+  var consuno = "select * from person WHERE destacadas IS NOT null ORDER BY destacadas DESC LIMIT 5";
   var consdos = "select * from person";
   con.query(consuno,function(e,r){
     res.render("index.ejs",{
@@ -21,6 +21,7 @@ router.get('/', (req, res, next) => {
       user: req.user
       });
 });
+
 
 
 });
