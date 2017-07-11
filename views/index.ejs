@@ -31,7 +31,7 @@
 			<div class="row" style="box-sizing: border-box;margin-bottom: 30px;">
 			<div class="col-md-12" style="background:#EEE;">
 			<div class="page-header">
-      		<h3>Peliculas // Series <small> Subtext for header</small></h3>
+      		<h3>DESTACADAS <small> Subtext for header</small></h3>
     		</div>
 
 			<% if(persons.length>0){%>
@@ -58,9 +58,39 @@
 			</div>
 			</div>
 			</div>
+			
+			 <div class="container">
+                        <div class="row" style="box-sizing: border-box;margin-bottom: 30px;">
+                        <div class="col-md-12" style="background:#EEE;">
+                        <div class="page-header">
+                <h3>Peliculas // Series <small> mostrar todo</small></h3>
+                </div>
 
+			<% if(personas.length>0){%>
 
+                        <% for(var i=0; i<personas.length; i++) {%>
+                        <div class="col-md-4">
+                        <figure class="snip1543">
+                          <img src="<%= personas[i].imagen %>" />
+                          <figcaption>
+                            <h3><%= personas[i].nombre %></h3>
+                            <p></p>
+                            <p><strong><%= personas[i].tipo %></strong></p>
+                            <br>
+                            <p><%= personas[i].apellido %></p>
+                          </figcaption>
+                          <a href="/pelicula/<%= personas[i].id %>"></a>
+                        </figure>
+                        </div>
+                        <% } %>
 
+                        <%} else {%>
+                        <p class="alert alert-warning">No hay contactos</p>
+                        <% } %>
+
+			 </div>
+                        </div>
+                        </div>
 
 
 			
